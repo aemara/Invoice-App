@@ -1,0 +1,196 @@
+﻿@page
+@model InvoiceApp.Pages.CreateInvoiceModel
+@{
+
+}
+
+<div class="container">
+    <header>
+        <a asp-page="/index" class="back-link">
+            <div class="back-link-wrap">
+                <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.342.886L2.114 5.114l4.228 4.228"
+                          stroke="#9277FF"
+                          stroke-width="2"
+                          fill="none"
+                          fill-rule="evenodd" />
+                </svg>
+                <p>Go Back</p>
+            </div>
+        </a>
+        <h1 class="new-invoice-page-title">
+            New Invoice
+        </h1>
+    </header>
+    <main>
+        <form class="create-invoice-form" method="post">
+   
+            <div class="bill-from-container">
+                <h2 class="bill-from-title">Bill From</h2>
+                <div class="bill-from-form">
+                    <div class="bill-from-input-wrap address-input-wrap">
+                        <label for="BillFromAddress">Street Address</label>
+                        <input asp-for="Input.BillFromAddress" type="text" />
+                        <span asp-validation-for="Input.BillFromAddress" class="error-message"></span>
+                    </div>
+                    <div class="bill-from-input-wrap city-input-wrap">
+                        <label for="BillFromCity">City</label>
+                        <input asp-for="Input.BillFromCity" type="text" />
+                        <span asp-validation-for="Input.BillFromCity" class="error-message"></span>
+                    </div>
+                    <div class="bill-from-input-wrap postal-input-wrap">
+                        <label for="BillFromPostal">Postal Code</label>
+                        <input asp-for="Input.BillFromPostal" type="text" />
+                        <span asp-validation-for="Input.BillFromPostal" class="error-message"></span>
+                    </div>
+                    <div class="bill-from-input-wrap country-input-wrap">
+                        <label for="BillFromCountry">Country</label>
+                        <input asp-for="Input.BillFromCountry" type="text" />
+                        <span asp-validation-for="Input.BillFromCountry" class="error-message"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bill-to-container">
+                <h2 class="bill-to-title">Bill To</h2>
+                <div class="bill-to-form">
+                    <div class="bill-to-input-wrap">
+                        <label for="ClientName">Client's Name</label>
+                        <input asp-for="Input.Client.ClientName" type="text" />
+                        <span asp-validation-for="Input.Client.ClientName" class="error-message"></span>
+                    </div>
+                    <div class="bill-to-input-wrap">
+                        <label for="ClientEmail">Client's Email</label>
+                        <input asp-for="Input.Client.ClientEmail" type="text" />
+                        <span asp-validation-for="Input.Client.ClientEmail" class="error-message"></span>
+                    </div>
+                    <div class="bill-to-input-wrap">
+                        <label for="ClientAddress">Street Address</label>
+                        <input asp-for="Input.Client.ClientAddress" type="text" />
+                        <span asp-validation-for="Input.Client.ClientAddress" class="error-message"></span>
+                    </div>
+                    <div class="bill-to-input-wrap bill-to-city-wrap">
+                        <label for="ClientCity">City</label>
+                        <input asp-for="Input.Client.ClientCity" type="text" />
+                        <span asp-validation-for="Input.Client.ClientCity" class="error-message"></span>
+                    </div>
+                    <div class="bill-to-input-wrap bill-to-postal-wrap">
+                        <label for="ClientPostal">Postal Code</label>
+                        <input asp-for="Input.Client.ClientPostal" type="text" />
+                        <span asp-validation-for="Input.Client.ClientPostal" class="error-message"></span>
+                    </div>
+                    <div class="bill-to-input-wrap">
+                        <label for="ClientCountry">Country</label>
+                        <input asp-for="Input.Client.ClientCountry" type="text" />
+                        <span asp-validation-for="Input.Client.ClientCountry" class="error-message"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="date-terms-description-container">
+                <div class="invoice-date-wrap">
+                    <label for="InvoiceDate">Invoice Date</label>
+                    <input asp-for="Input.InvoiceDate" type="date" />
+                </div>
+                <div class="payment-terms-wrap">
+                    <label for="PaymentTerms">Payment Terms</label>
+                    <select asp-for="Input.PaymentTerms" class="payment-terms-select">
+                        <option value="net-1-day">Net 1 Day</option>
+                        <option value="net-7-days">Net 7 Days</option>
+                        <option value="net-15-days">Net 15 Days</option>
+                        <option value="net-30-days">Net 30 Days</option>
+                    </select>
+                </div>
+                <div class="project-description-wrap">
+                    <label for="ProjectDescription">Project Description</label>
+                    <input asp-for="Input.Description" type="text" />
+                    <span asp-validation-for="Input.Description" class="error-message"></span>
+                </div>
+            </div>
+
+            <div class="item-list-creation-container">
+                <h2 class="item-list-title">Item List</h2>
+                <div class="item-list-form">
+                    <div class="new-item-wrap new-item-0">
+
+                        <div class="item-input-wrap item-input-name-wrap">
+                            <label for="item-name">Item Name</label>
+                            <input type="text" asp-for="Input.Items[0].Name" />
+                        </div>
+
+                        <div class="qty-price-total-delete-wrap">
+                            <div class="item-input-wrap item-input-quantity-wrap">
+                                <label for="quantity">Qty.</label>
+                                <input type="number" asp-for="Input.Items[0].Quantity" class="item-qty-input" />
+                            </div>
+                            <div class="item-input-wrap item-input-price-wrap">
+                                <label for="price">Price</label>
+                                <input type="number" asp-for="Input.Items[0].Price" class="item-price-input" />
+                            </div>
+
+                            <div class="item-total-price-wrap">
+                                <p class="item-total-price-label">Total</p>
+                                <p class="item-total-price-value">0</p>
+                            </div>
+
+                            <svg class="delete-item-icon delete-icon-item1"
+                                 width="13"
+                                 height="16"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z"
+                                      fill="#888EB0"
+                                      fill-rule="nonzero" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="new-item-wrap new-item-1">
+                        <div class="item-input-wrap item-input-name-wrap">
+                            <label for="item-name">Item Name</label>
+                            <input type="text" asp-for="Input.Items[1].Name" />
+                        </div>
+
+                        <div class="qty-price-total-delete-wrap">
+                            <div class="item-input-wrap item-input-quantity-wrap">
+                                <label for="quantity">Qty.</label>
+                                <input type="number" asp-for="Input.Items[1].Quantity" class="item-qty-input" />
+                            </div>
+                            <div class="item-input-wrap item-input-price-wrap">
+                                <label for="price">Price</label>
+                                <input type="number" asp-for="Input.Items[1].Price" class="item-price-input" />
+                            </div>
+
+                            <div class="item-total-price-wrap">
+                                <p class="item-total-price-label">Total</p>
+                                <p class="item-total-price-value">0</p>
+                            </div>
+
+                            <svg class="delete-item-icon delete-icon-item2"
+                                 width="13"
+                                 height="16"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z"
+                                      fill="#888EB0"
+                                      fill-rule="nonzero" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="add-item-btn">+ Add New Item</button>
+
+            </div>
+
+        </form>
+    </main>
+</div>
+
+<div class="invoice-controls-container">
+    <div class="container invoice-controls">
+        <a asp-page="/Index" class="discard-link create-invoice-control-link">Discard</a>
+        <a class="save-changes-link create-invoice-control-link">Save & Send</a>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/js/editInvoice.js"></script>

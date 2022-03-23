@@ -1,0 +1,119 @@
+﻿@page "{id?}"
+@model InvoiceApp.Pages.ViewInvoiceModel
+@{
+    ViewData["Title"] = "View Invoice";
+}
+<div class="container">
+    <a asp-page="/index" class="back-link">
+        <div class="back-link-wrap">
+            <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.342.886L2.114 5.114l4.228 4.228"
+                      stroke="#9277FF"
+                      stroke-width="2"
+                      fill="none"
+                      fill-rule="evenodd" />
+            </svg>
+            <p>Go Back</p>
+        </div>
+    </a>
+
+    <section class="view-invoice-status-wrap">
+        <p class="status-label">Status</p>
+        <div class="view-invoice-status">
+            <div class="status-dot"></div>
+            <p class="status-value">@Model.Invoice.Status</p>
+        </div>
+    </section>
+
+    <section class="invoice-detail-wrap">
+        <div class="id-description-wrap">
+            <p class="order-num"><span class="pound-sign"># </span>@Model.Invoice.InvoiceId</p>
+            <p class="description">@Model.Invoice.Description</p>
+        </div>
+        <div class="provider-address">
+            <p class="street">@Model.Invoice.BillFromAddress</p>
+            <p class="city">@Model.Invoice.BillFromCity</p>
+            <p class="postal-code">@Model.Invoice.BillFromPostal</p>
+            <p class="country">@Model.Invoice.BillFromCountry</p>
+        </div>
+        <div class="dates-and-client-address-wrap">
+            <div class="dates-container">
+                <div class="invoice-date-container">
+                    <p class="invoice-date-label">Invoice Date</p>
+                    <p class="invoice-date-value">@Model.Invoice.InvoiceDate.ToString("MM/dd/yyyy")</p>
+                </div>
+                <div class="payment-due-date-container">
+                    <p class="payment-due-date-label">Payment Due</p>
+                    <p class="payment-due-date-value">@Model.Invoice.PaymentDue.ToString("MM/dd/yyyy")</p>
+                </div>
+            </div>
+            <div class="bill-to-container">
+                <p class="bill-to-label">Bill To</p>
+                <p class="bill-to-client-name">@Model.Invoice.Client.ClientName</p>
+                <div class="bill-to-address-wrap">
+                    <p class="street">@Model.Invoice.Client.ClientAddress</p>
+                    <p class="city">@Model.Invoice.Client.ClientCity</p>
+                    <p class="postal-code">@Model.Invoice.Client.ClientPostal</p>
+                    <p class="country">@Model.Invoice.Client.ClientCountry</p>
+                </div>
+            </div>
+        </div>
+        <div class="sent-to-container">
+            <p class="sent-to-label">Sent to</p>
+            <p class="sent-to-value">@Model.Invoice.Client.ClientEmail</p>
+        </div>
+        <div class="item-list-container">
+            <div class="item-list">
+                @foreach (var item in Model.Invoice.Items)
+                {
+                    if (item.Quantity > 0)
+                    {
+                        <div class="item">
+                            <div class="item-name-quantity-wrap">
+                                <p class="item-name">@item.Name</p>
+                                <p class="quantity-times-price">
+                                    <span class="quantity">@item.Quantity </span>x<span class="price"> $ @item.Price</span>
+                                </p>
+                            </div>
+                            <p class="item-price">$ @(item.Price * item.Quantity)</p>
+                        </div>
+                    }
+                }
+
+            </div>
+            <div class="amount-due-wrap">
+                <p class="amount-due-label">Amount Due</p>
+                <p class="amount-due-value">$ @Model.Invoice.GetTotalPrice()</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<section class="invoice-controls-container">
+    <div class="container invoice-controls">
+        <a asp-page="/editinvoice" asp-route-id="@Model.Invoice.InvoiceId" class="edit-link invoice-control-link">Edit</a>
+        <a href="" class="delete-link invoice-control-link">Delete</a>
+        <form asp-page-handler="paid" method="post">
+            <button class="mark-paid-link invoice-control-link">Mark as Paid</button>
+        </form>
+    </div>
+</section>
+
+<div class="modal" style="display: none">
+    <div class="delete-modal-content">
+        <h2>Confirm Deletion</h2>
+        <p>
+            Are you sure you want to delete invoice #@Model.Invoice.InvoiceId? This action cannot be
+            undone.
+        </p>
+        <div class="delete-modal-btns">
+            <button class="cancel-btn">Cancel</button>
+            <form asp-page-handler="delete" method="post">
+                <button class="delete-btn">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/js/viewInvoice.js"></script>
